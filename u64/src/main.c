@@ -17,11 +17,12 @@
 #include "satellite.h"
 #include "network.h"
 #include "fetch.h"
+#include "defines.h"
 
 struct timespec tm;
 unsigned long ts;
 
-char lon_s[16], lat_s[16];
+char lon_s[MAX_RESULT_SIZE], lat_s[MAX_RESULT_SIZE];
 int lon, lat;
 
 void main(void)

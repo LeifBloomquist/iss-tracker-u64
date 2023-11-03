@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <c64.h>
 #include <peekpoke.h>
 #include "ultimate_lib.h"
+#include "defines.h"
 
 typedef unsigned char byte;
 
@@ -20,7 +22,6 @@ int get_uii_status()
 	//printf("\n%cDEBUG: [%s] [%s] [%d]\n", CG_PUR, uii_status, temp, status);
 	return status;
 }
-
 
 void network_init()
 {
@@ -73,55 +74,42 @@ int http_fetch(char* host, char* path, int port, char* result)
 	char c = 0;
 	byte socketnr = 0;
 
-	// 'GET /iss-now.json HTTP/1.1\r\nHost: api.open-notify.org\r\nConnection: close\r\n\r\n'
-	//sprintf(query, "GET %s HTTP/1.1\r\nHost: %s\r\nConnection: close\r\n\r\n", path, host);
 	sprintf(query, "GET %s HTTP/1.1\nHost: %s\nConnection: close\n\n", path, host);
 
-	printf("Query=%s", query);
+	//printf("Query=%s", query);
 
 	socketnr = uii_tcpconnect(host, port);
 
 	status = get_uii_status();
 	if (status != 0)
 	{
-		POKE(0xD020, 2);
+		POKE(BORDER, COLOR_RED);
 		printf("\nStatus: %s\n\n", uii_status);
 		printf("*** Failed to Connect to Server ***\n");
 		return -2;
 	}
-	printf("Connected\n");
-	uii_socketwrite_ascii(socketnr, query);  // Query is already ASCII
+	uii_socketwrite_ascii(socketnr, query);
 
+	POKE(BORDER, COLOR_BLACK);
+
+	// TODO - for longer return data, need to be more clever about copying received data to a local buffer
+	// This works for small messages under MAX_DATA_SIZE
 	while (1)
 	{
-		received = uii_socketread(socketnr, 1000);
-		printf("Received %d bytes\n", received);
+		POKE(BORDER, COLOR_GRAY1);
+		received = uii_socketread(socketnr, MAX_DATA_SIZE);
+		//printf("Received %d bytes\n", received);
 
 		if (received == -1) continue;  // No data yet
-		if (received == 0)  continue;     // End of stream
+		if (received == 0)  break;     // End of stream
 
 		memcpy(result, uii_data + 2, received);   // +2 because first two bytes are length of received data
 		uii_socketclose(socketnr);
+		POKE(BORDER, COLOR_BLACK);
 		return received;
 	}
 
-
-	/*
-
-	while (1)
-	{
-
-		//c = uii_tcp_nextchar(socketnr);
-
-		if (c == 0)
-		{
-			printf("c is 0\n");
-			return -1;
-		}
-		printf("Received [%c]\n", c);
-	}
-
-	*/
-
-
+	// Should never reach here with the current implementation, as we return as soon as any data is received above
+	POKE(BORDER, COLOR_YELLOW);
+	uii_socketclose(socketnr);
 }

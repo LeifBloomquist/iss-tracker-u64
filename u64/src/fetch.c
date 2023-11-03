@@ -10,12 +10,13 @@
 #include <stdio.h>
 #include "network.h"
 #include "json.h"
+#include "defines.h"
 
 const char host[]="api.open-notify.org";
 const char path[] ="/iss-now.json";
 const int port = 80;
 
-static char tmp[1000];
+static char tmp[MAX_DATA_SIZE];
 
 /**
  * @brief fetch satellite telemetry, and return as ints and strings
@@ -30,8 +31,8 @@ void fetch(int *lon, int *lat, char *lon_s, char *lat_s, unsigned long *ts)
   int received = 0;
 
   memset(tmp,0,sizeof(tmp));
-  memset(lon_s,0,16);
-  memset(lat_s,0,16);
+  memset(lon_s,0, MAX_RESULT_SIZE);
+  memset(lat_s,0, MAX_RESULT_SIZE);
 
   received = http_fetch(host, path, port, tmp);
 

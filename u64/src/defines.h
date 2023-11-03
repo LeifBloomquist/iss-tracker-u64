@@ -1,0 +1,4 @@
+#define MAX_DATA_SIZE 1000
+#define MAX_RESULT_SIZE 16
+
+#define BORDER 0xD020
