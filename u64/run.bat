@@ -1,5 +1,5 @@
 #echo off
-set PRG = iss-u64.prg
+set PRG=iss-u64.prg
 cls
 del %PRG%
 make
