@@ -13,6 +13,7 @@
 
 const char host[]="api.open-notify.org";
 const char path[] ="/iss-now.json";
+const int port = 80;
 
 static char tmp[1000];
 
@@ -32,7 +33,7 @@ void fetch(int *lon, int *lat, char *lon_s, char *lat_s, unsigned long *ts)
   memset(lon_s,0,16);
   memset(lat_s,0,16);
 
-  received = http_fetch(host, path, 80, tmp);
+  received = http_fetch(host, path, port, tmp);
 
   if (received <= 0)
   {
