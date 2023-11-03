@@ -25,7 +25,6 @@ int get_uii_status()
 void network_init()
 {
 	int status = 0;
-	printf("Built:%s %s\n", __DATE__, __TIME__);
 
 	if (uii_isdataavailable())
 	{
@@ -71,25 +70,49 @@ int http_fetch(char* host, char *path, int port, char* result)
 	char query[100];
 	int status = 0;
 	int received = 0;
+	char c = 0;
 	byte socketnr = 0;
 	
 	// 'GET /iss-now.json HTTP/1.1\r\nHost: api.open-notify.org\r\nConnection: close\r\n\r\n'
 	sprintf(query, "GET %s HTTP/1.1\r\nHost: %s\r\nConnection: close\r\n\r\n", host, path);
+
+	printf("Query=%s", query);
 	
 	socketnr = uii_tcpconnect(host, port);
-
+	
 	status = get_uii_status();
 	if (status != 0)
 	{
 		POKE(0xD020, 2);
 		printf("\nStatus: %s\n\n", uii_status);
 		printf("*** Failed to Connect to Server ***\n");
-		return -1;
+		return -2;
+	}
+	printf("Connected\n");
+	uii_socketwrite(socketnr, query);  //Already ASCII
+
+	while (1)
+	{
+		//received = uii_socketread(socketnr, 1000);
+		//printf("Received %d bytes\n", received);
+		c = uii_tcp_nextchar(socketnr);
+
+		if (c == 0)
+		{
+			printf("c is 0\n");
+			return -1;
+		}
+		printf("Received [%c]\n", c);
 	}
 
-	received = uii_socketread(socketnr, 1000);
+	
 
-	printf("Received %d bytes\n", received);
+	
+
+	if (received == -1)  // Error
+	{
+		return -1;
+	}
 
 	if (received == 0)
 	{

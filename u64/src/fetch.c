@@ -14,7 +14,7 @@
 const char host[]="api.open-notify.org";
 const char path[] ="/iss-now.json";
 
-static char tmp[500];
+static char tmp[1000];
 
 /**
  * @brief fetch satellite telemetry, and return as ints and strings
@@ -34,9 +34,14 @@ void fetch(int *lon, int *lat, char *lon_s, char *lat_s, unsigned long *ts)
 
   received = http_fetch(host, path, 80, tmp);
 
-//  TODO if (received <= 0)...
+  if (received <= 0)
+  {
+    return;
+  }
 
   printf("Received %d bytes:\n%s\n\n", received, tmp);
+
+  return;
 
   get_json_value_string(tmp, "\"latitude\"", lat_s);
   get_json_value_string(tmp, "\"longitude\"", lon_s);
