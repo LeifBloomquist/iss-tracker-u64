@@ -19,7 +19,6 @@
 #include "fetch.h"
 #include "defines.h"
 
-struct timespec tm;
 unsigned long ts;
 
 char lon_s[MAX_RESULT_SIZE], lat_s[MAX_RESULT_SIZE];
@@ -27,8 +26,6 @@ int lon, lat;
 
 void main(void)
 {
-  int seconds = 0;
-
   clrscr();
   printf("ISS Tracker for Ultimate 64\n");
   printf("Built: % s % s\n\n", __DATE__, __TIME__);
@@ -44,9 +41,6 @@ void main(void)
 
   while (true)
   {
-    tm.tv_sec = tm.tv_nsec = 0;
-    clock_settime(CLOCK_REALTIME, &tm);
-
     //   map();
     fetch(&lon,&lat,lon_s,lat_s,&ts);
     //  osd(lon_s,lat_s,ts);

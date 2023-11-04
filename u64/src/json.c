@@ -37,10 +37,10 @@ int get_json_value_string(char *json_str, char *name, char *value_out)
     return 0;
 }
 
-// Find a string value in JSON and return it
+// Find a long value in JSON and return it
 // name must include the "quotes"
 // Returns 1 on success or 0 on failure
-// If found, value copies to a string in value_out
+// If found, value copied in ulong pointed to by value_out
 
 int get_json_value_long(char* json_str, char* name, unsigned long *value_out)
 {

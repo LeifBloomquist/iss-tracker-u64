@@ -36,7 +36,7 @@ void fetch(int *lon, int *lat, char *lon_s, char *lat_s, unsigned long *ts)
 
   received = http_fetch(host, path, port, tmp);
 
-  if (received <= 0)
+  if (received <= 0) // Error or no data
   {
     return;
   }
