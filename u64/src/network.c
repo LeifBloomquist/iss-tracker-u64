@@ -3,6 +3,7 @@
 #include <string.h>
 #include <c64.h>
 #include <peekpoke.h>
+#include "network.h"
 #include "ultimate_lib.h"
 #include "defines.h"
 
@@ -73,10 +74,9 @@ int http_fetch(char* host, char* path, int port, char* result)
 	int received = 0;
 	char c = 0;
 	byte socketnr = 0;
+	char* start_of_data;
 
 	sprintf(query, "GET %s HTTP/1.1\nHost: %s\nConnection: close\n\n", path, host);
-
-	//printf("Query=%s", query);
 
 	socketnr = uii_tcpconnect(host, port);
 
@@ -96,6 +96,8 @@ int http_fetch(char* host, char* path, int port, char* result)
 	// This works for small messages under MAX_DATA_SIZE
 	while (1)
 	{
+		int header_length=0;
+
 		POKE(BORDER, COLOR_GRAY1);
 		received = uii_socketread(socketnr, MAX_DATA_SIZE);
 		//printf("Received %d bytes\n", received);
@@ -103,13 +105,53 @@ int http_fetch(char* host, char* path, int port, char* result)
 		if (received == -1) continue;  // No data yet
 		if (received == 0)  break;     // End of stream
 
-		memcpy(result, uii_data + 2, received);   // +2 because first two bytes are length of received data
+		// Skip over headers
+		start_of_data = strstr(uii_data+2, "\n\r\n\r");  // +2 because first two bytes are length of received data
+
+		if (start_of_data == NULL)
+		{
+			printf("Can't find end of header!\n");
+		}
+		
+		start_of_data += 4;   // Skip over CR and LFs
+		header_length = start_of_data - uii_data;
+		memcpy(result, start_of_data, strlen(start_of_data));
+
 		uii_socketclose(socketnr);
 		POKE(BORDER, COLOR_BLACK);
-		return received;
+		return received - header_length;
 	}
 
 	// Should never reach here with the current implementation, as we return as soon as any data is received above
 	POKE(BORDER, COLOR_YELLOW);
 	uii_socketclose(socketnr);
+}
+
+// Sanitize the string to remove any non-ASCII characters (replaced by a space)
+// Invalid characters can appear in raw data received over network, and the result messes up strstr()
+void sanitize_ascii(char* string)
+{
+	int i=0;
+	char c= ' ';
+
+	for (i = 0; i < strlen(string); i++)
+	{
+		c = string[i];
+
+		if ((c >= 32) && (c <= 63)) continue;  // Numbers and standard punctuation
+		
+		if ((c >= 65) && (c <= 90))   // Uppercase to Lowercase
+		{
+			string[i] = c + 32;
+			continue;
+		}
+
+		if ((c >= 97) && (c <= 122))   // Lowercase to Uppercase
+		{
+			string[i] = c - 32;
+			continue;
+		}
+
+		string[i] = ' ';
+	}
 }

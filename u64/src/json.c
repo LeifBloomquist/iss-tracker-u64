@@ -41,24 +41,27 @@ int get_json_value_string(char *json_str, char *name, char *value_out)
 // name must include the "quotes"
 // Returns 1 on success or 0 on failure
 // If found, value copied in ulong pointed to by value_out
-
-int get_json_value_long(char* json_str, char* name, unsigned long *value_out)
+int get_json_value_long(char* json_str, char* name, unsigned long* value_out)
 {
   char* ptr = json_str;
-  long value;
+  unsigned long value;
 
   while (ptr) 
   {
-    ptr = strstr(ptr, name);
+    ptr = strstr(ptr, name);  // Find the name
+
     if (ptr == NULL) {
       break;
     }
-    ptr = strchr(ptr, ':');
+
+    ptr = strchr(ptr, ':');   // Find the next ":"
+
     if (ptr == NULL) {
       break;
     }
-    ptr+=2;   // ": "
-    value = atol(ptr);  // Stops at first invalid character, TODO test
+
+    ptr+=2;   // ": "         // Skip over to the start of the value
+    value = atol(ptr);        // Stops at first invalid character
     
     *value_out = value;
     return 1;

@@ -29,6 +29,7 @@ static char tmp[MAX_DATA_SIZE];
 void fetch(int *lon, int *lat, char *lon_s, char *lat_s, unsigned long *ts)
 {
   int received = 0;
+  int found = 0;
 
   memset(tmp,0,sizeof(tmp));
   memset(lon_s,0, MAX_RESULT_SIZE);
@@ -39,15 +40,22 @@ void fetch(int *lon, int *lat, char *lon_s, char *lat_s, unsigned long *ts)
   if (received <= 0) // Error or no data
   {
     return;
+  }  
+  //printf("Received %d bytes:\n%s\n\n", received, tmp);
+  sanitize_ascii(tmp);
+
+  //get_json_value_string(tmp, "\"latitude\"", lat_s);
+  //get_json_value_string(tmp, "\"longitude\"", lon_s);
+  found = get_json_value_long(tmp, "timestamp", (unsigned long*)ts);
+
+  if (found)
+  {
+    printf("Timestamp=%lu\n", *ts);
   }
-
-  printf("Received %d bytes:\n%s\n\n", received, tmp);
-
-  return;
-
-  get_json_value_string(tmp, "\"latitude\"", lat_s);
-  get_json_value_string(tmp, "\"longitude\"", lon_s);
-  get_json_value_long(tmp, "\"timestamp\"", (unsigned long*)ts);
+  else
+  {
+    printf("Couldn't find timestamp\n");
+  }
 
   *lat = atoi(lat_s);
   *lon = atoi(lon_s);
