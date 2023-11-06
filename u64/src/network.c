@@ -127,7 +127,7 @@ int http_fetch(char* host, char* path, int port, char* result)
 	uii_socketclose(socketnr);
 }
 
-// Sanitize the string to remove any non-ASCII characters (replaced by a space)
+// Sanitize the string to remove any non-ASCII characters (replaced by a space) and fix upper/lowercase
 // Invalid characters can appear in raw data received over network, and the result messes up strstr()
 void sanitize_ascii(char* string)
 {
