@@ -44,18 +44,9 @@ void fetch(int *lon, int *lat, char *lon_s, char *lat_s, unsigned long *ts)
   //printf("Received %d bytes:\n%s\n\n", received, tmp);
   sanitize_ascii(tmp);
 
-  //get_json_value_string(tmp, "\"latitude\"", lat_s);
-  //get_json_value_string(tmp, "\"longitude\"", lon_s);
-  found = get_json_value_long(tmp, "timestamp", (unsigned long*)ts);
-
-  if (found)
-  {
-    printf("Timestamp=%lu\n", *ts);
-  }
-  else
-  {
-    printf("Couldn't find timestamp\n");
-  }
+  get_json_value_string(tmp, "latitude", lat_s);
+  get_json_value_string(tmp, "longitude", lon_s);
+  get_json_value_long(tmp, "timestamp", (unsigned long*)ts);
 
   *lat = atoi(lat_s);
   *lon = atoi(lon_s);

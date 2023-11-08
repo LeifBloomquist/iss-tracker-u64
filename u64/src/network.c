@@ -67,7 +67,7 @@ void network_init()
 	printf("   Gateway: %d.%d.%d.%d\n", uii_data[8], uii_data[9], uii_data[10], uii_data[11]);
 }
 
-int http_fetch(char* host, char* path, int port, char* result)
+int http_fetch(const char* host, const char* path, int port, char* result)
 {
 	char query[100];
 	int status = 0;
@@ -78,7 +78,7 @@ int http_fetch(char* host, char* path, int port, char* result)
 
 	sprintf(query, "GET %s HTTP/1.1\nHost: %s\nConnection: close\n\n", path, host);
 
-	socketnr = uii_tcpconnect(host, port);
+	socketnr = uii_tcpconnect((char*)host, port);
 
 	status = get_uii_status();
 	if (status != 0)
