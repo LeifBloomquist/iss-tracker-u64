@@ -1,5 +1,5 @@
 /**
- *  ISS Tracker for Ultimate 64.  Based on  #FujiNet ISS tracker for C64
+ *  ISS Tracker for Ultimate 64.  Based on #FujiNet ISS tracker for C64
  * 
  * @author Leif Bloomquist, Thomas Cherryhomes
  * @license gpl v. 3
@@ -35,16 +35,16 @@ void main(void)
   printf("\nPress any key...\n\n");
   cgetc();
 
-  // tgi_install(c64_hi_tgi);
-  // tgi_init();
-  // tgi_clear();
+  tgi_install(c64_hi_tgi);
+  tgi_init();
+  tgi_clear();
 
   while (true)
   {
-    //   map();
+    map();
     fetch(&lon,&lat,lon_s,lat_s,&ts);
-    //  osd(lon_s,lat_s,ts);
-    //  satellite(lon,lat);
+    osd(lon_s,lat_s,ts);
+    satellite(lon,lat);
 
     sleep(10);
   }
