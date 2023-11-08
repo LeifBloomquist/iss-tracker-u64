@@ -96,7 +96,7 @@ void satellite(int lon, int lat)
 
   // Enable sprite
   *SPRENABLE=0x01;
-  *SPRCOLR=0x07;
+  *SPRCOLR=0x01;
 
   // Swap in RAM, so that we can set the sprite pointer
   SEI();
