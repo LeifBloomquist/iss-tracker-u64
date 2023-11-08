@@ -152,6 +152,7 @@ void sanitize_ascii(char* string)
 			continue;
 		}
 
+		// Unknown or invalid characters
 		string[i] = ' ';
 	}
 }
