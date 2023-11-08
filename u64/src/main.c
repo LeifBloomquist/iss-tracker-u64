@@ -39,9 +39,10 @@ void main(void)
   tgi_init();
   tgi_clear();
 
+  map();
+
   while (true)
-  {
-    map();
+  {   
     fetch(&lon,&lat,lon_s,lat_s,&ts);
     osd(lon_s,lat_s,ts);
     satellite(lon,lat);
