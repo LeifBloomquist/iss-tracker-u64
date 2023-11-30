@@ -35,6 +35,8 @@ void main(void)
   printf("\nPress any key...\n\n");
   cgetc();
 
+  bordercolor(COLOR_BLACK);
+
   tgi_install(c64_hi_tgi);
   tgi_init();
   tgi_clear();

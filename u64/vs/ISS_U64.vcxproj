@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -21,24 +21,28 @@
   <ItemGroup>
     <ClCompile Include="..\src\fetch.c" />
     <ClCompile Include="..\src\json.c" />
-    <ClCompile Include="..\src\lib\ultimate_lib.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\map.c" />
     <ClCompile Include="..\src\network.c" />
     <ClCompile Include="..\src\osd.c" />
     <ClCompile Include="..\src\satellite.c" />
     <ClCompile Include="..\src\text.c" />
+    <ClCompile Include="..\src\ultimate_lib.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\defines.h" />
     <ClInclude Include="..\src\fetch.h" />
     <ClInclude Include="..\src\json.h" />
-    <ClInclude Include="..\src\lib\ultimate_lib.h" />
     <ClInclude Include="..\src\map.h" />
     <ClInclude Include="..\src\network.h" />
     <ClInclude Include="..\src\osd.h" />
     <ClInclude Include="..\src\satellite.h" />
     <ClInclude Include="..\src\text.h" />
+    <ClInclude Include="..\src\ultimate_lib.h" />
     <ClInclude Include="network.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Makefile" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -102,6 +106,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <ExecutablePath />
+    <IncludePath>C:\cc65\include</IncludePath>
+    <ExternalIncludePath />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

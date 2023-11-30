@@ -1,3 +1,13 @@
+/**
+ * #FujiNet ISS tracker for C64
+ *
+ * @author  Thomas Cherryhomes
+ * @email   thom dot cherryhomes at gmail dot com
+ * @license gpl v. 3
+ *
+ * @brief Network interface wrapper for Ultimate 64 networking
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -89,16 +99,12 @@ int http_fetch(const char* host, const char* path, int port, char* result)
 		return -2;
 	}
 	uii_socketwrite_ascii(socketnr, query);
-
-	POKE(BORDER, COLOR_BLACK);
-
 	// TODO - for longer return data, need to be more clever about copying received data to a local buffer
 	// This works for small messages under MAX_DATA_SIZE
 	while (1)
 	{
 		int header_length=0;
 
-		POKE(BORDER, COLOR_GRAY1);
 		received = uii_socketread(socketnr, MAX_DATA_SIZE);
 		//printf("Received %d bytes\n", received);
 
@@ -118,7 +124,6 @@ int http_fetch(const char* host, const char* path, int port, char* result)
 		memcpy(result, start_of_data, strlen(start_of_data));
 
 		uii_socketclose(socketnr);
-		POKE(BORDER, COLOR_BLACK);
 		return received - header_length;
 	}
 
