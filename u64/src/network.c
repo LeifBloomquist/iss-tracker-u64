@@ -79,7 +79,7 @@ void network_init()
 
 int http_fetch(const char* host, const char* path, int port, char* result)
 {
-	char query[100];
+	char query[200];
 	int status = 0;
 	int received = 0;
 	char c = 0;
@@ -87,6 +87,8 @@ int http_fetch(const char* host, const char* path, int port, char* result)
 	char* start_of_data;
 
 	sprintf(query, "GET %s HTTP/1.1\nHost: %s\nConnection: close\n\n", path, host);
+
+	//printf("query=[%s]\n", query);
 
 	socketnr = uii_tcpconnect((char*)host, port);
 
@@ -99,6 +101,7 @@ int http_fetch(const char* host, const char* path, int port, char* result)
 		return -2;
 	}
 	uii_socketwrite_ascii(socketnr, query);
+
 	// TODO - for longer return data, need to be more clever about copying received data to a local buffer
 	// This works for small messages under MAX_DATA_SIZE
 	while (1)
@@ -106,7 +109,7 @@ int http_fetch(const char* host, const char* path, int port, char* result)
 		int header_length=0;
 
 		received = uii_socketread(socketnr, MAX_DATA_SIZE);
-		//printf("Received %d bytes\n", received);
+	  //printf("Received %d bytes (total)\n", received);
 
 		if (received == -1) continue;  // No data yet
 		if (received == 0)  break;     // End of stream

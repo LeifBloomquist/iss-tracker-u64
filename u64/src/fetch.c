@@ -41,7 +41,7 @@ void fetch(int *lon, int *lat, char *lon_s, char *lat_s, unsigned long *ts)
   {
     return;
   }  
-  //printf("Received %d bytes:\n%s\n\n", received, tmp);
+  //printf("Received %d bytes (body) [%s]\n\n", received, tmp);
   sanitize_ascii(tmp);
 
   get_json_value_string(tmp, "latitude", lat_s);
