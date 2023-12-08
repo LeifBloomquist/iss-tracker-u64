@@ -39,7 +39,6 @@
     <ClInclude Include="..\src\satellite.h" />
     <ClInclude Include="..\src\text.h" />
     <ClInclude Include="..\src\ultimate_lib.h" />
-    <ClInclude Include="network.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Makefile" />

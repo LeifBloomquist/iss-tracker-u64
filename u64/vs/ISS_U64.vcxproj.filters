@@ -37,7 +37,7 @@
     <ClCompile Include="..\src\fetch.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\lib\ultimate_lib.c">
+    <ClCompile Include="..\src\ultimate_lib.c">
       <Filter>Network Lib</Filter>
     </ClCompile>
   </ItemGroup>
@@ -57,17 +57,20 @@
     <ClInclude Include="..\src\text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\lib\ultimate_lib.h">
-      <Filter>Network Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="network.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\network.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\json.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ultimate_lib.h">
+      <Filter>Network Lib</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Makefile" />
   </ItemGroup>
 </Project>
