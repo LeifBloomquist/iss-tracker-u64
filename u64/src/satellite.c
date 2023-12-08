@@ -1,13 +1,13 @@
 /**
  * #FujiNet ISS tracker for C64
  *
- * @author  Thomas Cherryhomes, Leif Bloomqiist
+ * @author  Thomas Cherryhomes, Leif Bloomquist
  * @email   thom dot cherryhomes at gmail dot com
  * @license gpl v. 3
  *
  * Satellite display
  * 
- * LB: Added calibrated lat/long lookup tables
+ * LB: Added Added lookup tables for lat/lon
  */
 
 #include <c64.h>
