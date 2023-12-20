@@ -35,7 +35,7 @@ void osd(char *lon_s, char *lat_s, unsigned long ts)
   sprintf(tmp,"  as of: %s UTC",ctime(&ts));
 
   // ctime() seems to have a bug where a garbage CR 'm' appears in the resulting string, replace it with a space
-  for (i = 0; i <= strlen(tmp); i++) 
+  for (i = 0; i < strlen(tmp); i++) 
   {
     if (tmp[i] == 13) tmp[i] = 32;
   }
