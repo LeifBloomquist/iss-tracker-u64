@@ -1,5 +1,5 @@
 # iss-tracker-u64
-A port of the very cool [ISS Tracker for the #FujiNet](https://github.com/FujiNetWIFI/fujinet-apps#iss-tracker) (C64 version) to use the [Ultimate 64 Networking Library](https://github.com/xlar54/ultimateii-dos-lib) instead, with a few minor tweaks.
+A port of the very cool [ISS Tracker for the #FujiNet](https://github.com/FujiNetWIFI/fujinet-iss-tracker) (C64 version) to use the [Ultimate 64 Networking Library](https://github.com/xlar54/ultimateii-dos-lib) instead, with a few minor tweaks.
 
 [Download](https://github.com/LeifBloomquist/iss-tracker-u64/raw/main/u64/iss-u64.prg)
 
